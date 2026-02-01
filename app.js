@@ -84,4 +84,34 @@ navItems.forEach(item => {
     });
   }
 });
+
+// ==============================
+// SCROLL REVEAL ANIMATION
+// ==============================
+
+const animatedItems = document.querySelectorAll('[data-animate]');
+
+const scrollObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      const delay = el.dataset.delay || 0;
+
+      if (entry.isIntersecting) {
+        el.style.transitionDelay = `${delay}s`;
+        el.classList.add('in-view');
+      } else {
+        // Remove for replay on scroll up
+        el.classList.remove('in-view');
+      }
+    });
+  },
+  {
+    threshold: 0.15,
+    rootMargin: '0px 0px -60px 0px'
+  }
+);
+
+animatedItems.forEach(el => scrollObserver.observe(el));
+
  
